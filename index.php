@@ -66,7 +66,7 @@
         "at","on","in"
     );
     
-    $sql_news="SELECT body, cnid FROM node_all LIMIT 0,100";
+    $sql_news="SELECT body, cnid FROM node_all LIMIT 0,50";
 	
     $view_news=mysql_query($sql_news,$mysqli_news);
 	
@@ -296,6 +296,14 @@
 	            }
 		}
 		
+		//places in-uppercase letter
+		foreach($uniquePlaces as $key=>$place){
+			$mathces = preg_match('/^[a-z]/', $place);
+			if($mathces === 1){
+				unset($uniquePlaces[$key]);
+			}
+		}
+		
 		$uniquePlaces = array_values(array_trim($uniquePlaces));
 		 /*
 	    echo '<b>Names:</b><br>';
@@ -313,7 +321,7 @@
     		mysql_query($sql_places,$mysqli_places);
 	    }
 		
-    }//while mysql_fetch_array
+    }// tutup while mysql_fetch_array
     
 	$sql_countPlaces = "SELECT places, count(places) as 'count_place' FROM tb_places GROUP BY places";
 	$view_places=mysql_query($sql_countPlaces,$mysqli_places);
